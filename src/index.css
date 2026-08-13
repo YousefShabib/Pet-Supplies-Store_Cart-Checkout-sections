@@ -1,0 +1,29 @@
+:root {
+  font-family: Roboto, system-ui, sans-serif;
+  color: #1a1a1a;
+  background: #f7f7f5;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #f7f7f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
