@@ -2,7 +2,7 @@
 
 Microfrontend for **Group 8 — Pet Supplies Store**. This repo owns the shopping cart, shipping step, mocked payment, and order confirmation.
 
-Standalone live URL: _add after deploy_
+Standalone live URL: [https://pet-supplies-store.vercel.app/](https://pet-supplies-store.vercel.app/)
 
 Shell integration custom element: `<pawpantry-cart></pawpantry-cart>`  
 Bundle: `/wc.js` from the production build.
@@ -87,7 +87,7 @@ npm run preview
 The build emits the standalone SPA (`index.html`) and `wc.js` for the shell:
 
 ```html
-<script type="module" src="https://YOUR_DEPLOY/wc.js"></script>
+<script type="module" src="https://pet-supplies-store.vercel.app/wc.js"></script>
 <pawpantry-cart></pawpantry-cart>
 ```
 
