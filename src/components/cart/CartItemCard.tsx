@@ -41,7 +41,18 @@ export function CartItemCard({ item, onQuantity, onRemove, onSaveForLater, compa
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" gap={1}>
             <Box>
-              <Typography fontWeight={700}>{item.name}</Typography>
+              <Typography
+                component="a"
+                href={`/p/${encodeURIComponent(item.productId)}`}
+                fontWeight={700}
+                sx={{
+                  color: 'inherit',
+                  textDecoration: 'none',
+                  '&:hover': { color: 'primary.main', textDecoration: 'underline' },
+                }}
+              >
+                {item.name}
+              </Typography>
               <Typography variant="body2" color="text.secondary">
                 {item.variantLabel}
               </Typography>

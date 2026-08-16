@@ -33,7 +33,7 @@ React 19 + TypeScript + Vite + MUI, themed to PawPantry (forest green + orange).
 Cross-app handoffs (owned by other members, linked from here):
 
 - Track order → `/account/orders/:orderNumber`
-- Guest checkout → `/login?redirect=/checkout/shipping`
+- Guest checkout is allowed (no login gate)
 - Continue shopping / browse → `/`
 - Wishlist → `/account/wishlist`
 - Item name can later link to `/p/:productSlug`
@@ -90,6 +90,14 @@ The build emits the standalone SPA (`index.html`) and `wc.js` for the shell:
 <script type="module" src="https://pet-supplies-store.vercel.app/wc.js"></script>
 <pawpantry-cart></pawpantry-cart>
 ```
+
+## Embedded (shell) mode
+
+Set the `embedded` attribute on `<pawpantry-cart>`. Then this app:
+
+- Registers only `/cart` and `/checkout/*` (no `/` demo home, no catch-all, no stub login)
+- Hides `StoreHeader` so the shell header is the only store chrome
+- Does **not** seed the demo cart
 
 ## Integration notes
 

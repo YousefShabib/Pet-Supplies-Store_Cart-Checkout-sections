@@ -7,12 +7,11 @@ import { LeaveCheckoutDialog } from './components/overlays/LeaveCheckoutDialog'
 import { ProcessingModal } from './components/overlays/ProcessingModal'
 import { AppSnackbar } from './components/overlays/AppSnackbar'
 import { on } from './contracts'
+import { EmbeddedContext } from './embed'
 import { isSeeding } from './mock/demoHarness'
 import { CartPage } from './pages/CartPage'
 import { CheckoutFailedPage } from './pages/CheckoutFailedPage'
 import { ConfirmationPage } from './pages/ConfirmationPage'
-import { DemoHomePage } from './pages/DemoHomePage'
-import { LoginPage } from './pages/LoginPage'
 import { PaymentPage } from './pages/PaymentPage'
 import { ShippingPage } from './pages/ShippingPage'
 import { useCart } from './store/cartStore'
@@ -53,37 +52,38 @@ function ScrollToTop() {
   return null
 }
 
-export function AppRoutes() {
+export function AppRoutes({ embedded = false }: { embedded?: boolean }) {
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
-      <ScrollToTop />
-      <BusToasts />
-      <Routes>
-        <Route path="/" element={<DemoHomePage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/checkout/shipping"
-          element={
-            <RequireCart>
-              <ShippingPage />
-            </RequireCart>
-          }
-        />
-        <Route
-          path="/checkout/payment"
-          element={
-            <RequireCart>
-              <PaymentPage />
-            </RequireCart>
-          }
-        />
-        <Route path="/checkout/success/:orderNumber" element={<ConfirmationPage />} />
-        <Route path="/checkout/failed" element={<CheckoutFailedPage />} />
-        <Route path="*" element={<Navigate to="/cart" replace />} />
-      </Routes>
-      <Overlays />
-    </Box>
+    <EmbeddedContext.Provider value={embedded}>
+      <Box sx={{ minHeight: embedded ? 'auto' : '100vh', bgcolor: 'background.default' }}>
+        <ScrollToTop />
+        <BusToasts />
+        <Routes>
+          <Route path="/" element={<Navigate to="/cart" replace />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route
+            path="/checkout/shipping"
+            element={
+              <RequireCart>
+                <ShippingPage />
+              </RequireCart>
+            }
+          />
+          <Route
+            path="/checkout/payment"
+            element={
+              <RequireCart>
+                <PaymentPage />
+              </RequireCart>
+            }
+          />
+          <Route path="/checkout/success/:orderNumber" element={<ConfirmationPage />} />
+          <Route path="/checkout/failed" element={<CheckoutFailedPage />} />
+          <Route path="*" element={embedded ? null : <Navigate to="/cart" replace />} />
+        </Routes>
+        <Overlays />
+      </Box>
+    </EmbeddedContext.Provider>
   )
 }
 

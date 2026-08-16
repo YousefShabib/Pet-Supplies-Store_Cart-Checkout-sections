@@ -11,13 +11,13 @@ import { StoreHeader } from '../components/layout/StoreHeader'
 import { CheckoutFooter } from '../components/layout/CheckoutFooter'
 import { OrderSummary } from '../components/summary/OrderSummary'
 import { formatMoney } from '../contracts'
+import { useEmbedded } from '../embed'
 import { saveForLater, setQuantity, useCart } from '../store/cartStore'
-import { useCheckout } from '../store/checkoutStore'
 import { askRemoveItem } from '../store/uiStore'
 
 export function CartPage() {
   const cart = useCart()
-  const checkout = useCheckout()
+  const embedded = useEmbedded()
   const navigate = useNavigate()
   const theme = useTheme()
   const mobile = useMediaQuery(theme.breakpoints.down('md'))
@@ -25,16 +25,12 @@ export function CartPage() {
 
   const proceed = () => {
     if (cart.items.length === 0 || blocked) return
-    if (!checkout.signedIn) {
-      navigate('/login?redirect=/checkout/shipping')
-      return
-    }
     navigate('/checkout/shipping')
   }
 
   return (
     <Box>
-      {mobile ? (
+      {embedded ? null : mobile ? (
         <Box
           sx={{
             display: 'flex',

@@ -25,7 +25,7 @@ export function EmptyCart() {
         Looks like you have not added anything yet. Let us find something your pet will love.
       </Typography>
       <Stack spacing={1.5} alignItems="center">
-        <Button href="/" variant="contained" color="secondary" size="large" sx={{ minWidth: 220 }}>
+        <Button href="/shop" variant="contained" color="secondary" size="large" sx={{ minWidth: 220 }}>
           Browse Products
         </Button>
         <Link href="/account/wishlist" underline="hover" color="primary" fontWeight={600}>

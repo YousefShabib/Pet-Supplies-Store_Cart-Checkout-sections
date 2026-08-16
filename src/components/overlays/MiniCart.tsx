@@ -4,6 +4,7 @@ import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlin
 import { Box, Button, Drawer, IconButton, Stack, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { formatMoney } from '../../contracts'
+import { crossApp, useEmbedded } from '../../embed'
 import { setQuantity, useCart } from '../../store/cartStore'
 import { closeMiniCart, useUi } from '../../store/uiStore'
 import { QuantityStepper } from '../cart/QuantityStepper'
@@ -11,11 +12,27 @@ import { QuantityStepper } from '../cart/QuantityStepper'
 export function MiniCart() {
   const { miniCartOpen } = useUi()
   const cart = useCart()
+  const embedded = useEmbedded()
   const navigate = useNavigate()
 
   const go = (path: string) => {
     closeMiniCart()
+    if (
+      embedded &&
+      (path === '/' ||
+        path.startsWith('/shop') ||
+        path.startsWith('/p/') ||
+        path.startsWith('/account') ||
+        path.startsWith('/login'))
+    ) {
+      crossApp(path)
+      return
+    }
     navigate(path)
+  }
+
+  const checkoutNow = () => {
+    go('/checkout/shipping')
   }
 
   return (
@@ -32,7 +49,7 @@ export function MiniCart() {
           <Box sx={{ textAlign: 'center', my: 'auto' }}>
             <ShoppingBasketOutlinedIcon sx={{ fontSize: 48, color: 'text.secondary', mb: 1 }} />
             <Typography fontWeight={700}>Nothing here yet</Typography>
-            <Button variant="contained" color="secondary" sx={{ mt: 2 }} onClick={() => go('/')}>
+            <Button variant="contained" color="secondary" sx={{ mt: 2 }} onClick={() => go('/shop')}>
               Start Shopping
             </Button>
           </Box>
@@ -77,7 +94,7 @@ export function MiniCart() {
                 variant="contained"
                 color="secondary"
                 endIcon={<ArrowForwardIcon />}
-                onClick={() => go('/checkout/shipping')}
+                onClick={checkoutNow}
               >
                 Checkout
               </Button>
